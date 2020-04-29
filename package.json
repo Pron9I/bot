@@ -18,8 +18,10 @@
   "homepage": "https://github.com/oscarmorrison/nightmare-heroku",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "electron": "^1.8.8",
     "nightmare": "^2.10.0",
     "telegraf": "^3.38.0"
+  },
+  "devDependencies": {
+    "electron": "^1.8.8"
   }
 }
