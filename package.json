@@ -17,7 +17,7 @@
   },
   "homepage": "https://github.com/oscarmorrison/nightmare-heroku",
   "dependencies": {
-    "electron": "^1.6.10",
+    "electron": "^1.8.8",
     "nightmare": "^2.10.0"
   }
 }
