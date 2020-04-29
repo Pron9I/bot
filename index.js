@@ -19,10 +19,10 @@ const bot = new Telegraf(
     // , { telegram: { agent: socksAgent } }
 );
 
-async function ATIparse(cityLoad, radLoad) {
+function ATIparse(cityLoad, radLoad) {
     const Nightmare = require('nightmare');
     // show: true,
-    const nightmare = await Nightmare({
+    const nightmare = Nightmare({
         typeInterval: 500,
     });
     let finish = {};
