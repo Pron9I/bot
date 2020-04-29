@@ -22,7 +22,7 @@ const bot = new Telegraf(
 function ATIparse(cityLoad, radLoad) {
     const Nightmare = require('nightmare');
     // show: true,
-    const nightmare = Nightmare({
+    const nightmare = await Nightmare({
         typeInterval: 500,
     });
     let finish = {};
