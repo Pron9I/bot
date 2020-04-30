@@ -248,8 +248,8 @@ bot
             }
             parsing();
         }
-        );
-    })()
+        )();
+    })
 
 
 bot.on('sticker', (ctx) => ctx.reply('👍'));
