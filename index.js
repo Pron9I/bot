@@ -232,7 +232,7 @@ bot
         isEnough = false;
         let time;
         time = 'начало';
-        parsing = async function () {
+        parsing = function () {
             async function callback(newReq) {
                 if (newReq.time != time || time === 'начало') {
                     ctx.reply(
@@ -242,7 +242,7 @@ bot
                     time = newReq.time;
                 }
             }
-            await ATIparse(data[0], data[1]).then((newReq) => { callback(newReq) }).then(() => timeout(30000)).then(() => { if (!isEnough) await parsing() })
+            await ATIparse(data[0], data[1]).then((newReq) => { callback(newReq) }).then(() => timeout(30000)).then(() => { if (!isEnough) parsing() })
         };
         parsing();
 
