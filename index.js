@@ -18,7 +18,9 @@ const bot = new Telegraf(
     process.env.BOT_TOKEN
     // , { telegram: { agent: socksAgent } }
 );
-
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
 async function ATIparse(cityLoad, radLoad) {
     const Nightmare = require('nightmare');
     // show: true,
@@ -230,7 +232,7 @@ bot
         let time;
         let newReq = {};
         time = 'начало';
-        parsing = setTimeout(async function () {
+        parsing = (async function () {
             newReq = await ATIparse(data[0], data[1]);
             async function callback() {
                 if (newReq.time != time || time === 'начало') {
@@ -242,8 +244,9 @@ bot
                 }
             }
             await callback();
+            await timeout(30000);
             if (!isEnough) parsing();
-        }, 25000);
+        });
         parsing();
 
     });
