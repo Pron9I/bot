@@ -232,7 +232,7 @@ bot
         isEnough = false;
         let time;
         time = 'начало';
-        parsing = function () {
+        parsing = async function () {
             async function callback(newReq) {
                 if (newReq.time != time || time === 'начало') {
                     ctx.reply(
