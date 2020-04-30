@@ -218,8 +218,7 @@ async function ATIparse(cityLoad, radLoad) {
 
 let parsing;
 bot.hears('Закончить поиск', (ctx) => {
-    isEnough = false;
-    // clearInterval(parsing)
+    clearInterval(parsing)
     ctx.reply('Поиск завершен. Для дальнешего использования введи: "[ГОРОД] [РАССТОЯНИЕ]"');
 });
 
