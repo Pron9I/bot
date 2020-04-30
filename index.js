@@ -247,7 +247,7 @@ bot
             await timeout(30000);
             if (!isEnough) await parsing();
         };
-        await parsing();
+        parsing();
 
     });
 
