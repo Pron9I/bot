@@ -229,8 +229,10 @@ bot
         let newReq = {};
         date = 'начало';
         parsing = setInterval(() => {
+            console.log(date, newReq.date)
             newReq = ATIparse(data[0], data[1]);
             setTimeout(() => {
+                console.log(date, newReq.date)
                 if (newReq.date != date || date === 'начало') {
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
@@ -238,6 +240,7 @@ bot
                     );
                     date = newReq.date;
                 }
+                console.log(date, newReq.date)
             }, 20000);
         }, 30000);
     });
