@@ -229,10 +229,10 @@ bot
     .on('text', (ctx) => {
         const data = ctx.message.text.split(' ');
         cargo.date = 'начало';
-        parsing = setInterval(() => {
+        parsing = setInterval((cargo) => {
             newReq = ATIparse(data[0], data[1]);
-            setTimeout(() => {
-                if (cargo.date === 'начало' || cargo.date === newReq.date) {
+            setTimeout((cargo) => {
+                if (cargo.date === 'начало' || cargo.date !== newReq.date) {
                     cargo = newReq;
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
