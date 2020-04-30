@@ -225,22 +225,19 @@ bot
     )
     .on('text', (ctx) => {
         const data = ctx.message.text.split(' ');
-        let date;
+        let time;
         let newReq = {};
-        date = 'начало';
+        time = 'начало';
         parsing = setInterval(() => {
-            console.log(date, newReq.date)
             newReq = ATIparse(data[0], data[1]);
             setTimeout(() => {
-                console.log(date, newReq.date)
-                if (newReq.date != date || date === 'начало') {
+                if (newReq.time != time || time === 'начало') {
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
                         Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
                     );
-                    date = newReq.date;
+                    time = newReq.time;
                 }
-                console.log(date, newReq.date)
             }, 20000);
         }, 45000);
     });
