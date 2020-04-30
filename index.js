@@ -215,7 +215,7 @@ function ATIparse(cityLoad, radLoad) {
 let parsing;
 let message;
 bot.hears('Закончить поиск', (ctx) => {
-    clearInterval(parsing); clearInterval(message);
+    clearInterval(parsing);
     ctx.reply('Поиск завершен. Для дальнешего использования введи: "[ГОРОД] [РАССТОЯНИЕ]"');
 });
 
@@ -234,7 +234,7 @@ bot
             newReq = ATIparse(data[0], data[1]);
             message = setInterval(() => {
                 console.log(newReq.time);
-                if (newReq.time != time || time === 'начало' || newReq.loadCity != 'не указано') {
+                if (newReq.time != time || time === 'начало' || newReq.loadCity != 'не указано' || newReq.loadCity != 'undefined' || newReq.loadCity != undefined) {
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
                         Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
@@ -242,6 +242,7 @@ bot
                     if (newReq.time != 'не указано') time = newReq.time;
                 }
             }, 29000);
+            clearInterval(message);
         }, 58000);
     });
 
