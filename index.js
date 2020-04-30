@@ -212,9 +212,6 @@ function ATIparse(cityLoad, radLoad) {
 }
 
 let parsing;
-let cargo = {};
-let newReq = {};
-cargo.date = 'начало';
 bot.hears('Закончить поиск', (ctx) => {
     clearInterval(parsing);
     ctx.reply('Поиск завершен. Для дальнешего использования введи: "[ГОРОД] [РАССТОЯНИЕ]"');
@@ -228,11 +225,13 @@ bot
     )
     .on('text', (ctx) => {
         const data = ctx.message.text.split(' ');
+        let cargo = {};
+        let newReq = {};
         cargo.date = 'начало';
-        parsing = setInterval((cargo) => {
+        parsing = setInterval(() => {
             newReq = ATIparse(data[0], data[1]);
-            setTimeout((cargo) => {
-                if (cargo.date === 'начало' || cargo.date !== newReq.date) {
+            setTimeout(() => {
+                if (newReq.date !== cargo.date || cargo.date === 'начало') {
                     cargo = newReq;
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
