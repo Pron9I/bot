@@ -212,7 +212,8 @@ function ATIparse(cityLoad, radLoad) {
 }
 
 let parsing;
-let cargo = {};
+let cargo;
+let newReq;
 cargo.date = 'начало';
 bot.hears('Закончить поиск', (ctx) => {
     clearInterval(parsing);
@@ -229,11 +230,9 @@ bot
         const data = ctx.message.text.split(' ');
         cargo.date = 'начало';
         parsing = setInterval(() => {
-            let newReq = {};
             newReq = ATIparse(data[0], data[1]);
             setTimeout(() => {
                 if (cargo.date === 'начало' || cargo.date !== newReq.date) {
-                    cargo = {};
                     cargo = newReq;
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
