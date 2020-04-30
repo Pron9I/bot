@@ -211,8 +211,8 @@ async function ATIparse(cityLoad, radLoad) {
         .catch(function (error) {
             console.error('Search failed:', error);
         });
-    resolve(finish)
-    // return finish;
+    // resolve(finish)
+    return finish;
 }
 async function message(newReq) {
     if (newReq.time != time || time === 'начало') {
