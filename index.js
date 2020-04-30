@@ -225,6 +225,7 @@ async function message(newReq) {
 }
 
 let parsing;
+let newReq
 bot.hears('Закончить поиск', (ctx) => {
     isEnough = false;
     // clearInterval(parsing)
@@ -243,7 +244,8 @@ bot
             let time;
             time = 'начало';
             parsing = async function () {
-                await ATIparse(data[0], data[1]).then((newReq) => message(newReq)).then(() => timeout(30000));
+                newReq = await ATIparse(data[0], data[1]);
+                message(newReq).then(() => timeout(30000))
                 if (!isEnough) await parsing();
             }
             parsing();
