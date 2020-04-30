@@ -231,10 +231,9 @@ bot
         const data = ctx.message.text.split(' ');
         isEnough = false;
         let time;
-        let newReq = {};
         time = 'начало';
         parsing = async function () {
-            async function callback() {
+            async function callback(newReq) {
                 if (newReq.time != time || time === 'начало') {
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
@@ -243,10 +242,7 @@ bot
                     time = newReq.time;
                 }
             }
-            newReq = await ATIparse(data[0], data[1]);
-            await callback();
-            await timeout(30000);
-            if (!isEnough) await parsing();
+            await ATIparse(data[0], data[1]).then((newReq) => { callback(newReq) }).then(() => timeout(30000)).then(() => { if (!isEnough) await parsing() })
         };
         parsing();
 
