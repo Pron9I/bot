@@ -239,7 +239,7 @@ bot
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
                         Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
                     );
-                    if (newReq != 'undefined') time = newReq.time;
+                    if (newReq.time != 'undefined') time = newReq.time;
                 }
             }, 29000);
         }, 58000);
