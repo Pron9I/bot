@@ -115,6 +115,7 @@ function ATIparse(cityLoad, radLoad) {
         })
         .then(() => {
             return nightmare
+                .wait(1500)
                 .evaluate(() => {
                     return document
                         .querySelector('.grid-row')
