@@ -239,8 +239,8 @@ bot
                     );
                     time = newReq.time;
                 }
-            }, 26000);
-        }, 31000);
+            }, 20000);
+        }, 45000);
     });
 
 bot.on('sticker', (ctx) => ctx.reply('👍'));
