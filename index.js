@@ -212,8 +212,8 @@ function ATIparse(cityLoad, radLoad) {
 }
 
 let parsing;
-let cargo;
-let newReq;
+let cargo = {};
+let newReq = {};
 cargo.date = 'начало';
 bot.hears('Закончить поиск', (ctx) => {
     clearInterval(parsing);
