@@ -231,18 +231,20 @@ bot
         let newReq = {};
         time = 'начало';
         parsing = setInterval(() => {
-            clearInterval(message);
             newReq = ATIparse(data[0], data[1]);
+            console.log(newReq.time);
             message = setInterval(() => {
                 console.log(newReq.time);
-                if (newReq.time != time || time === 'начало' || newReq.loadCity != 'не указано' || newReq.loadCity != 'undefined' || newReq.loadCity != undefined) {
-                    ctx.reply(
-                        `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
-                        Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
-                    );
-                    if (newReq.time != 'не указано') time = newReq.time;
+                if (newReq.loadCity != undefined) {
+                    if (newReq.time != time || time === 'начало') {
+                        ctx.reply(
+                            `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
+                            Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
+                        );
+                        if (newReq.time != undefined) time = newReq.time;
+                    }
                 }
-            }, 30000);
+            }, 29000);
         }, 58000);
     });
 
