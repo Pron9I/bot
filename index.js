@@ -119,7 +119,7 @@ function ATIparse(cityLoad, radLoad) {
                 .evaluate(() => {
                     return document
                         .querySelector('.grid-row')
-                        .querySelector('div[data-bo-if="e.rate.priceNoNds > 0"] span').innerText
+                        .querySelector('div[data-bo-if="e.rate.priceNoNds > 0"] span')
                         .innerText;
                 })
                 .then((noNds) => {
@@ -239,8 +239,8 @@ bot
                     );
                     time = newReq.time;
                 }
-            }, 25000);
-        }, 30000);
+            }, 26000);
+        }, 31000);
     });
 
 bot.on('sticker', (ctx) => ctx.reply('👍'));
