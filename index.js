@@ -118,7 +118,7 @@ function ATIparse(cityLoad, radLoad) {
                 .evaluate(() => {
                     return document
                         .querySelector('.grid-row')
-                        .querySelector('div[data-bo-if="e.rate.priceNoNds > 0"] .rate-bold').innerText
+                        .querySelector('div[data-bo-if="e.rate.priceNoNds > 0"] span').innerText
                         .innerText;
                 })
                 .then((noNds) => {
@@ -225,18 +225,18 @@ bot
     )
     .on('text', (ctx) => {
         const data = ctx.message.text.split(' ');
-        let cargo = {};
+        let date;
         let newReq = {};
-        cargo.date = 'начало';
+        date = 'начало';
         parsing = setInterval(() => {
             newReq = ATIparse(data[0], data[1]);
             setTimeout(() => {
-                if (newReq.date !== cargo.date || cargo.date === 'начало') {
-                    cargo = newReq;
+                if (newReq.date != date || date === 'начало') {
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
                         Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
                     );
+                    date = newReq.date;
                 }
             }, 20000);
         }, 30000);
