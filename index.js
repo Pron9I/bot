@@ -238,8 +238,8 @@ bot
                     );
                     time = newReq.time;
                 }
-            }, 20000);
-        }, 45000);
+            }, 25000);
+        }, 30000);
     });
 
 bot.on('sticker', (ctx) => ctx.reply('👍'));
