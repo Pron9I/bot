@@ -233,7 +233,7 @@ bot
         parsing = setInterval(() => {
             newReq = ATIparse(data[0], data[1]);
             message = setInterval(() => {
-                if (newReq.time != time || time === 'начало') {
+                if (newReq.time != time || time === 'начало' || newReq.time != 'undefined') {
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
                         Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
