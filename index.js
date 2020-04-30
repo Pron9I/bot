@@ -233,6 +233,7 @@ bot
         parsing = setInterval(() => {
             newReq = ATIparse(data[0], data[1]);
             message = setInterval(() => {
+                console.log(newReq.time);
                 if (newReq.time != time || time === 'начало' || newReq.loadCity != 'undefined') {
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
