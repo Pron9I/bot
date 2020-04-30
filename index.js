@@ -245,7 +245,7 @@ bot
             time = 'начало';
             parsing = async function () {
                 newReq = await ATIparse(data[0], data[1]);
-                message(newReq).then(() => timeout(30000))
+                await message(newReq).then(() => timeout(30000))
                 if (!isEnough) await parsing();
             }
             parsing();
