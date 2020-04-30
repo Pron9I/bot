@@ -21,7 +21,7 @@ const bot = new Telegraf(
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-function ATIparse(cityLoad, radLoad) {
+async function ATIparse(cityLoad, radLoad) {
     const Nightmare = require('nightmare');
     // show: true,
     const nightmare = Nightmare({
@@ -211,12 +211,23 @@ function ATIparse(cityLoad, radLoad) {
         .catch(function (error) {
             console.error('Search failed:', error);
         });
-    return finish;
+    resolve(finish)
+    // return finish;
+}
+async function message(newReq) {
+    if (newReq.time != time || time === 'начало') {
+        ctx.reply(
+            `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
+            Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
+        );
+        time = newReq.time;
+    }
 }
 
 let parsing;
 bot.hears('Закончить поиск', (ctx) => {
-    clearInterval(parsing)
+    isEnough = false;
+    // clearInterval(parsing)
     ctx.reply('Поиск завершен. Для дальнешего использования введи: "[ГОРОД] [РАССТОЯНИЕ]"');
 });
 
@@ -227,25 +238,39 @@ bot
         )
     )
     .on('text', (ctx) => {
-        const data = ctx.message.text.split(' ');
-        let time;
-        let newReq = {};
-        time = 'начало';
-        parsing = setInterval(() => {
-            newReq = ATIparse(data[0], data[1]);
-            setTimeout(() => {
-                if (newReq.time != time || time === 'начало') {
-                    ctx.reply(
-                        `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
-                        Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
-                    );
-                    time = newReq.time;
-                }
-            }, 30000);
-        }, 60000);
-    });
+        (async () => {
+            const data = ctx.message.text.split(' ');
+            let time;
+            time = 'начало';
+            parsing = async function () {
+                await ATIparse(data[0], data[1]).then((newReq) => message(newReq)).then(() => timeout(30000));
+                if (!isEnough) await parsing();
+            }
+            parsing();
+        }
+        );
+    })()
+
 
 bot.on('sticker', (ctx) => ctx.reply('👍'));
 
 bot.launch();
 
+//     .on('text', (ctx) => {
+//         const data = ctx.message.text.split(' ');
+//         let time;
+//         let newReq = {};
+//         time = 'начало';
+//         parsing = setInterval(() => {
+//             newReq = ATIparse(data[0], data[1]);
+//             setTimeout(() => {
+//                 if (newReq.time != time || time === 'начало') {
+//                     ctx.reply(
+//                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
+//                         Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
+//                     );
+//                     time = newReq.time;
+//                 }
+//             }, 30000);
+//         }, 60000);
+//     });
