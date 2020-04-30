@@ -232,15 +232,18 @@ bot
         time = 'начало';
         parsing = async function () {
             newReq = await ATIparse(data[0], data[1]);
-            setTimeout(() => {
-                if (newReq.time != time || time === 'начало') {
-                    ctx.reply(
-                        `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
-                        Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
-                    );
-                    time = newReq.time;
-                }
-            }, 20000)
+            async function callback() {
+                setTimeout(() => {
+                    if (newReq.time != time || time === 'начало') {
+                        ctx.reply(
+                            `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
+                            Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
+                        );
+                        time = newReq.time;
+                    }
+                }, 30000)
+            }
+            await callback();
             if (!isEnough) parsing();
         };
         parsing();
