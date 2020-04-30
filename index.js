@@ -232,14 +232,14 @@ bot
         time = 'начало';
         parsing = setInterval(() => {
             newReq = ATIparse(data[0], data[1]);
-            message(newReq) = setInterval((newReqq) => {
-                console.log(newReqq.time);
-                if (newReqq.time != time || time === 'начало' || newReqq.loadCity != 'undefined') {
+            message = setInterval(() => {
+                console.log(newReq.time);
+                if (newReq.time != time || time === 'начало' || newReq.loadCity != undefined) {
                     ctx.reply(
-                        `Город загрузки: ${newReqq.loadCity}\nГород выгрузки: ${newReqq.unloadCity}\nРасстояние: ${newReqq.distance}\nДата загрузки: ${newReqq.loadDate}\nНал: ${newReqq.cash}\nБез НДС: ${newReqq.noNds}`,
+                        `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
                         Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
                     );
-                    if (newReqq.time != 'undefined') time = newReqq.time;
+                    if (newReq.time != 'undefined') time = newReq.time;
                 }
             }, 29000);
         }, 58000);
