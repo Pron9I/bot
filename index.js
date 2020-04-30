@@ -231,6 +231,7 @@ bot
         let newReq = {};
         time = 'начало';
         parsing = setInterval(() => {
+            clearInterval(message);
             newReq = ATIparse(data[0], data[1]);
             message = setInterval(() => {
                 console.log(newReq.time);
@@ -241,8 +242,7 @@ bot
                     );
                     if (newReq.time != 'не указано') time = newReq.time;
                 }
-            }, 29000);
-            clearInterval(message);
+            }, 30000);
         }, 58000);
     });
 
