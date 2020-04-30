@@ -21,7 +21,7 @@ const bot = new Telegraf(
 function timeout(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-async function ATIparse(cityLoad, radLoad) {
+function ATIparse(cityLoad, radLoad) {
     const Nightmare = require('nightmare');
     // show: true,
     const nightmare = Nightmare({
@@ -214,10 +214,9 @@ async function ATIparse(cityLoad, radLoad) {
     return finish;
 }
 
-let isEnough = false;
 let parsing;
 bot.hears('Закончить поиск', (ctx) => {
-    isEnough = true;
+    clearInterval(parsing)
     ctx.reply('Поиск завершен. Для дальнешего использования введи: "[ГОРОД] [РАССТОЯНИЕ]"');
 });
 
@@ -229,11 +228,12 @@ bot
     )
     .on('text', (ctx) => {
         const data = ctx.message.text.split(' ');
-        isEnough = false;
         let time;
+        let newReq = {};
         time = 'начало';
-        parsing = async function () {
-            async function callback(newReq) {
+        parsing = setInterval(() => {
+            newReq = ATIparse(data[0], data[1]);
+            setTimeout(() => {
                 if (newReq.time != time || time === 'начало') {
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
@@ -241,38 +241,11 @@ bot
                     );
                     time = newReq.time;
                 }
-            }
-            await ATIparse(data[0], data[1]).then((newReq) => { callback(newReq) }).then(() => timeout(30000)).then(() => { if (!isEnough) parsing() })
-        };
-        parsing();
-
+            }, 20000);
+        }, 60000);
     });
 
 bot.on('sticker', (ctx) => ctx.reply('👍'));
 
 bot.launch();
 
-// bot
-//     .start((ctx) =>
-//         ctx.reply(
-//             `Привет, ${ctx.message.from.first_name}! Для начала поиска груза напиши: "[ГОРОД] [РАССТОЯНИЕ]"`
-//         )
-//     )
-//     .on('text', (ctx) => {
-//         const data = ctx.message.text.split(' ');
-//         let time;
-//         let newReq = {};
-//         time = 'начало';
-//         parsing = setInterval(() => {
-//             newReq = ATIparse(data[0], data[1]);
-//             setTimeout(() => {
-//                 if (newReq.time != time || time === 'начало') {
-//                     ctx.reply(
-//                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
-//                         Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
-//                     );
-//                     time = newReq.time;
-//                 }
-//             }, 20000);
-//         }, 45000);
-//     });
