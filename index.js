@@ -1,10 +1,10 @@
 // const SocksAgent = require('C:/Users/GOD/ATIBOT/node_modules/socks5-https-client/lib/Agent.js');
 
 // const socksAgent = new SocksAgent({
-//   socksHost: '188.241.45.61',
-//   socksPort: 4145,
-//   //   // socksUsername: ,
-//   //   // socksPassword: ,
+//     socksHost: '188.241.45.61',
+//     socksPort: 4145,
+//     //   // socksUsername: ,
+//     //   // socksPassword: ,
 // });
 require('dotenv').config();
 
@@ -232,7 +232,7 @@ bot
         parsing = setInterval(() => {
             newReq = ATIparse(data[0], data[1]);
             setTimeout(() => {
-                if (cargo.date === 'начало' || cargo.date !== newReq.date) {
+                if (cargo.date === 'начало' || cargo.date === newReq.date) {
                     cargo = newReq;
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
