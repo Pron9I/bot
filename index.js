@@ -234,12 +234,12 @@ bot
             newReq = ATIparse(data[0], data[1]);
             message = setInterval(() => {
                 console.log(newReq.time);
-                if (newReq.time != time || time === 'начало' || newReq.loadCity != undefined) {
+                if (newReq.time != time || time === 'начало' || newReq.loadCity != 'не указано') {
                     ctx.reply(
                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
                         Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
                     );
-                    if (newReq.time != 'undefined') time = newReq.time;
+                    if (newReq.time != 'не указано') time = newReq.time;
                 }
             }, 29000);
         }, 58000);
