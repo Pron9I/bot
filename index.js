@@ -18,10 +18,7 @@ const bot = new Telegraf(
     process.env.BOT_TOKEN
     // , { telegram: { agent: socksAgent } }
 );
-function timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-async function ATIparse(cityLoad, radLoad) {
+function ATIparse(cityLoad, radLoad) {
     const Nightmare = require('nightmare');
     // show: true,
     const nightmare = Nightmare({
@@ -211,7 +208,6 @@ async function ATIparse(cityLoad, radLoad) {
         .catch(function (error) {
             console.error('Search failed:', error);
         });
-    // resolve(finish)
     return finish;
 }
 
