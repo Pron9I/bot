@@ -242,7 +242,7 @@ bot
                 }
                 console.log(date, newReq.date)
             }, 20000);
-        }, 30000);
+        }, 45000);
     });
 
 bot.on('sticker', (ctx) => ctx.reply('👍'));
