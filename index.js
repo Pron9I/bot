@@ -213,6 +213,15 @@ async function ATIparse(cityLoad, radLoad) {
         });
     return finish;
 }
+async function callback() {
+    if (newReq.time != time || time === 'начало') {
+        ctx.reply(
+            `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
+            Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
+        );
+        time = newReq.time;
+    }
+}
 let isEnough = false;
 let parsing;
 bot.hears('Закончить поиск', (ctx) => {
@@ -232,22 +241,13 @@ bot
         let time;
         let newReq = {};
         time = 'начало';
-        parsing = (async function () {
+        parsing = async function () {
             newReq = await ATIparse(data[0], data[1]);
-            async function callback() {
-                if (newReq.time != time || time === 'начало') {
-                    ctx.reply(
-                        `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
-                        Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
-                    );
-                    time = newReq.time;
-                }
-            }
             await callback();
             await timeout(30000);
-            if (!isEnough) parsing();
-        });
-        parsing();
+            if (!isEnough) await parsing();
+        };
+        await parsing();
 
     });
 
