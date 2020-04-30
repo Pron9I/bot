@@ -214,6 +214,7 @@ async function ATIparse(cityLoad, radLoad) {
     // resolve(finish)
     return finish;
 }
+let time;
 async function message(newReq) {
     if (newReq.time != time || time === 'начало') {
         ctx.reply(
@@ -241,7 +242,6 @@ bot
     .on('text', (ctx) => {
         (async () => {
             const data = ctx.message.text.split(' ');
-            let time;
             time = 'начало';
             parsing = async function () {
                 newReq = await ATIparse(data[0], data[1]);
