@@ -215,15 +215,7 @@ async function ATIparse(cityLoad, radLoad) {
     return finish;
 }
 let time;
-async function message(newReq) {
-    if (newReq.time != time || time === 'начало') {
-        ctx.reply(
-            `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
-            Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
-        );
-        time = newReq.time;
-    }
-}
+
 
 let parsing;
 let newReq
@@ -240,6 +232,15 @@ bot
         )
     )
     .on('text', (ctx) => {
+        async function message(newReq) {
+            if (newReq.time != time || time === 'начало') {
+                ctx.reply(
+                    `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
+                    Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
+                );
+                time = newReq.time;
+            }
+        }
         (async () => {
             const data = ctx.message.text.split(' ');
             time = 'начало';
