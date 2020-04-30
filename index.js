@@ -241,8 +241,10 @@ bot
                     time = newReq.time;
                 }
             }, 20000)
+            if (!isEnough) parsing();
         };
-        if (!isEnough) parsing();
+        parsing();
+
     });
 
 bot.on('sticker', (ctx) => ctx.reply('👍'));
