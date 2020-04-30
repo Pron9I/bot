@@ -19,7 +19,7 @@ const bot = new Telegraf(
     // , { telegram: { agent: socksAgent } }
 );
 
-function ATIparse(cityLoad, radLoad) {
+async function ATIparse(cityLoad, radLoad) {
     const Nightmare = require('nightmare');
     // show: true,
     const nightmare = Nightmare({
@@ -211,10 +211,10 @@ function ATIparse(cityLoad, radLoad) {
         });
     return finish;
 }
-
+let isEnough = false;
 let parsing;
 bot.hears('Закончить поиск', (ctx) => {
-    clearInterval(parsing);
+    isEnough = true;
     ctx.reply('Поиск завершен. Для дальнешего использования введи: "[ГОРОД] [РАССТОЯНИЕ]"');
 });
 
@@ -226,11 +226,12 @@ bot
     )
     .on('text', (ctx) => {
         const data = ctx.message.text.split(' ');
+        isEnough = false;
         let time;
         let newReq = {};
         time = 'начало';
-        parsing = setInterval(() => {
-            newReq = ATIparse(data[0], data[1]);
+        parsing = async function () {
+            newReq = await ATIparse(data[0], data[1]);
             setTimeout(() => {
                 if (newReq.time != time || time === 'начало') {
                     ctx.reply(
@@ -239,10 +240,36 @@ bot
                     );
                     time = newReq.time;
                 }
-            }, 20000);
-        }, 45000);
+            }, 20000)
+        };
+        if (!isEnough) parsing();
     });
 
 bot.on('sticker', (ctx) => ctx.reply('👍'));
 
 bot.launch();
+
+// bot
+//     .start((ctx) =>
+//         ctx.reply(
+//             `Привет, ${ctx.message.from.first_name}! Для начала поиска груза напиши: "[ГОРОД] [РАССТОЯНИЕ]"`
+//         )
+//     )
+//     .on('text', (ctx) => {
+//         const data = ctx.message.text.split(' ');
+//         let time;
+//         let newReq = {};
+//         time = 'начало';
+//         parsing = setInterval(() => {
+//             newReq = ATIparse(data[0], data[1]);
+//             setTimeout(() => {
+//                 if (newReq.time != time || time === 'начало') {
+//                     ctx.reply(
+//                         `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
+//                         Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
+//                     );
+//                     time = newReq.time;
+//                 }
+//             }, 20000);
+//         }, 45000);
+//     });
