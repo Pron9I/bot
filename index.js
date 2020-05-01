@@ -211,9 +211,10 @@ function ATIparse(cityLoad, radLoad) {
     return finish;
 }
 
-
+let unloadCity;
 let parsing;
 let message;
+let time;
 bot.hears('Закончить поиск', (ctx) => {
     clearInterval(parsing); clearInterval(message);
     ctx.reply('Поиск завершен. Для дальнешего использования введи: "[ГОРОД] [РАССТОЯНИЕ]"');
@@ -227,26 +228,24 @@ bot
     )
     .on('text', (ctx) => {
         const data = ctx.message.text.split(' ');
-        let time;
         let newReq = {};
+        unloadCity = 'начало';
         time = 'начало';
         parsing = setInterval(() => {
             clearInterval(message);
             newReq = ATIparse(data[0], data[1]);
-            console.log(newReq.time);
             message = setInterval(() => {
-                console.log(newReq.time);
-                if (newReq.loadCity != undefined) {
-                    if (newReq.time != time || time === 'начало') {
+                if (newReq.unloadCity != undefined) {
+                    if ((newReq.unloadCity != unloadCity && newReq.time != time) || unloadCity === 'начало') {
                         ctx.reply(
                             `Город загрузки: ${newReq.loadCity}\nГород выгрузки: ${newReq.unloadCity}\nРасстояние: ${newReq.distance}\nДата загрузки: ${newReq.loadDate}\nНал: ${newReq.cash}\nБез НДС: ${newReq.noNds}`,
                             Markup.keyboard(['Закончить поиск']).oneTime().resize().extra()
                         );
-                        if (newReq.time != undefined) time = newReq.time;
+                        if (newReq.unloadCity != undefined) { unloadCity = newReq.unloadCity; time = newReq.time };
                     }
                 }
-            }, 29000);
-        }, 58000);
+            }, 25000);
+        }, 30000);
     });
 
 
