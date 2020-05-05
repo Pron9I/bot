@@ -1,26 +1,38 @@
 {
-  "name": "life-scrape",
+  "name": "botpuppeteer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/oscarmorrison/lifeScrape.git"
+    "url": "git+https://github.com/Pron9I/botPuppeteer.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/oscarmorrison/nightmare-heroku"
+    "url": "https://github.com/Pron9I/botPuppeteer/issues"
   },
-  "homepage": "https://github.com/oscarmorrison/nightmare-heroku",
+  "homepage": "https://github.com/Pron9I/botPuppeteer#readme",
   "dependencies": {
     "dotenv": "^8.2.0",
-    "electron": "^8.2.4",
-    "nightmare": "^2.10.0",
-    "telegraf": "^3.38.0"
+    "https-proxy-agent": "^5.0.0",
+    "puppeteer": "^3.0.2",
+    "socks-proxy-agent": "^5.0.0",
+    "socks5-http-client": "^1.0.4",
+    "socks5-https-client": "^1.2.1",
+    "telegraf": "^3.38.0",
+    "tunnel": "0.0.6"
   },
-  "devDependencies": {}
+  "engines": {
+    "node": ">= 12.8.0",
+    "npm": ">= 6.14.4"
+  },
+  "devDependencies": {
+    "bufferutil": "^4.0.1",
+    "utf-8-validate": "^5.0.2"
+  }
 }
